@@ -1,10 +1,13 @@
-const express = require('express')
-const cors = require('cors')
-const { connection } = require('./Config/db')
-const { userRouter } = require('./Routes/user.routes')
+const express = require("express");
+const cors = require("cors");
+const { connection } = require("./Config/db");
+const { userRouter } = require("./Routes/user.routes");
+
+const { bookRouter } = require("./Routes/book.router");
 // require('dotenv').config()
-const app=express()
-app.use(cors())
+const app = express();
+app.use(express.json());
+app.use(cors());
 // const nodeMailer = require('nodemailer')
 
 // const html =`
@@ -39,15 +42,20 @@ app.use(cors())
 // main()
 // .catch((e)=>console.log(e))
 
-app.use(express.json())
-app.use('/users',userRouter)
+app.use(express.json());
+app.use("/books", bookRouter);
+app.use("/users", userRouter);
 
-app.listen(5000,async(req,res)=>{
-    try{
-        await connection
-        console.log("Connected to db")
-    }catch(err){
-        console.log(err)
-    }
-    console.log(`Running on port 5000`)
+app.get("/", (req, res) => {
+    res.send("Hello World");
 })
+
+app.listen(5000, async (req, res) => {
+  try {
+    await connection;
+    console.log("Connected to db");
+  } catch (err) {
+    console.log(err);
+  }
+  console.log(`Running on port 5000`);
+});
