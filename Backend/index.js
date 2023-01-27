@@ -2,7 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const { connection } = require("./Config/db");
 const { userRouter } = require("./Routes/user.routes");
-
+require("dotenv").config()
+const port =process.env.port
 const { bookRouter } = require("./Routes/book.router");
 // require('dotenv').config()
 const app = express();
@@ -50,12 +51,12 @@ app.get("/", (req, res) => {
     res.send("Hello World");
 })
 
-app.listen(5000, async (req, res) => {
+app.listen(port, async (req, res) => {
   try {
     await connection;
     console.log("Connected to db");
   } catch (err) {
     console.log(err);
   }
-  console.log(`Running on port 5000`);
+  console.log(`Running on port ${port}`);
 });
