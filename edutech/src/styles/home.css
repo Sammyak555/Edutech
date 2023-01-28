@@ -1,0 +1,125 @@
+.home-page{
+    margin: auto;
+    /* border: 1px solid red;
+    */
+}
+.intro-div{
+    width: 60%;
+    margin: auto;
+    margin-top: 40px;
+}
+.intro-div>h1{
+    font-size: 40px;
+    font-family: sans-serif;
+}
+.intro-div>p{
+    font-size: 20px;
+    font-family: sans-serif;
+    color: gray;
+}
+.panelnav{
+    /* border: 1px solid red; */
+    width: 60%;
+    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    font-family: sans-serif;
+}
+.subpanel{
+    /* border: 1px solid grey; */
+    padding: 5px 12px 5px 12px;
+    text-align: center;
+    border-radius: 14px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.titles>img{
+    width: 60%;
+}
+.maths-page{
+    /* border: 1px solid red; */
+    width: 85%;
+    margin: auto;
+    background: linear-gradient(240deg,#11cdef,white)!important;
+    width: 100%;
+  
+    clip-path: polygon(0% 50%,
+                  0% 0%,
+                  100% 0%,
+                 100% 100%,
+                  0% 100%,
+                  0% 50%,
+                   0% 20%);
+}
+.math-comp{
+    /* border: 1px solid blue; */
+    width: 90%;
+    margin: auto;
+    height: fit-content;
+    padding: 40px;
+}
+.subject-heading{
+    margin-bottom: 40px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    gap: 20px;
+}
+.subject-heading>img{
+    width: 5%;
+}
+.math-topics{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+.image-div{
+   height:150px
+}
+.image-div>img{
+    height: 100%;
+    width: 50%;
+}
+
+@media only screen and (max-width: 426px) {
+    .subject-heading>img{
+        width: 15%;
+    }
+    .math-topics{
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+    }
+    .intro-div{
+        /* border: 1px solid blue; */
+        width: 60%;
+        margin: auto;
+        margin-top: 40px;
+    }
+    .intro-div>h1{
+        font-size: 40px;
+        font-family: sans-serif;
+    }
+    .intro-div>p{
+        font-size: 16px;
+        font-family: sans-serif;
+        color: rgb(100, 100, 100);
+    }
+    .panelnav{
+        /* border: 1px solid red; */
+        width: 80%;
+        margin: auto;
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 20px;
+        font-family: sans-serif;
+    }
+    .subpanel{
+        /* border: 1px solid grey; */
+        padding: 5px 12px 5px 12px;
+        text-align: center;
+        border-radius: 14px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+    .titles>img{
+        width: 60%;
+    }
+}
