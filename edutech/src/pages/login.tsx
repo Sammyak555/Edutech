@@ -43,10 +43,23 @@ export default function Login() {
           .then((res) => {
             dispatch({ type: loginSuccess, payload: res.data });
             console.log(res.data);
+            toast({
+              title: res.data.msg,
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+              position: "top-right",
+            });
           });
       } catch (err: any) {
         dispatch({ type: loginFailure, payload: err.message });
-        console.log(err.message);
+        toast({
+          title: err.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top-right",
+        });
       }
     } else {
       toast({
