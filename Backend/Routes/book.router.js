@@ -7,8 +7,9 @@ const { Bookmodel } = require("../Model/book.model");
 
 
 bookRouter.get("/", async (req, res) => {
+  const query=req.query
   try {
-    const data = await Bookmodel.find();
+    const data = await Bookmodel.find(query);
     res.status(200).send(data);
   } catch (err) {
     console.log(err);
