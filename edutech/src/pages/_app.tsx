@@ -6,6 +6,7 @@ import "../styles/home.css";
 import "../styles/Message.css"
 import "../styles/Chat.css";
 
+import {BrowserRouter} from 'react-router-dom'
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
