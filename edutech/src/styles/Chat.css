@@ -1,7 +1,7 @@
 .chatPage{
-    background-color: rgb(31, 29, 29);
-    width: 100vw;
-    height: 100vh;
+    margin: auto;
+    width: 50%;
+    height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,8 +9,8 @@
 
 .chatContainer{
     background-color: white;
-    height: 60%;
-    width: 50%;
+    height: 100%;
+    width: 100%;
 }
 
 .header{
@@ -42,7 +42,7 @@
 
  height: 70%;
  box-sizing: border-box;
- 
+ overflow: scroll;
 }
 
 .inputBox{

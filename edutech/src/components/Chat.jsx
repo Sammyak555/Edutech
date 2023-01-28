@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { user } from "../Join/Join";
+import { user } from "./Join";
 import socketIo from "socket.io-client";
-import "./Chat.css";
-import sendLogo from "../../images/send.png";
-import Message from "../Message/Message";
+// 
+import sendLogo from "../images/send.png";
+import Message from "./Message";
 import ReactScrollToBottom from "react-scroll-to-bottom";
-import closeIcon from "../../images/closeIcon.png";
+import closeIcon from "../images/closeIcon.png";
 
 let socket;
 
-const ENDPOINT = "https://demo-cchat.herokuapp.com/";
+const ENDPOINT = "http://localhost:4500/";
 
 const Chat = () => {
     const [id, setid] = useState("");
@@ -34,6 +34,7 @@ const Chat = () => {
         socket.emit('joined', { user })
 
         socket.on('welcome', (data) => {
+            console.log(data)
             setMessages([...messages, data]);
             console.log(data.user, data.message);
         })
@@ -49,7 +50,7 @@ const Chat = () => {
         })
 
         return () => {
-            socket.emit('disconnect');
+            socket.emit('disconnected');
             socket.off();
         }
     }, [])

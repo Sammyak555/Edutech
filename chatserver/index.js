@@ -2,6 +2,7 @@ const http=require("http");
 const express =require("express");
 const cors = require("cors");
 const socketIO = require("socket.io");
+const { connection } = require("../Backend/Config/db");
 
 const app=express();  // creating the server 
 const port=4500;
@@ -12,6 +13,7 @@ const users=[{}];
 app.use(cors());
 app.get("/",(req,res)=>{
     res.send("HELL ITS WORKING");
+    
 })
 
 const server=http.createServer(app);
@@ -39,6 +41,11 @@ io.on("connection",(socket)=>{
 });
 
 
-server.listen(port,()=>{      // listing to server 
+server.listen(port,async()=>{      // listing to server 
+    try{
+        await connection
+    }catch(err){
+        console.log(err)
+    }
     console.log(`Working`);
 })

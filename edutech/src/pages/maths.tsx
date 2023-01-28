@@ -2,6 +2,7 @@ import React from "react";
 import Singlesubject from "../components/Singlesubject";
 
 import { Image } from "@chakra-ui/react";
+import Chat from "@/components/Chat";
 
 type obj = {
   title: string;
@@ -40,6 +41,9 @@ export default function maths(data: any) {
             arrdata.map((el: obj, i: number) => {
               return <Singlesubject key={i} {...el} />;
             })}
+        </div>
+        <div>
+            <Chat/>
         </div>
       </div>
     </div>
