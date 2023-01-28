@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { user } from "./Join";
+// import { user } from "./Join";
 import socketIo from "socket.io-client";
 // 
 import sendLogo from "../images/send.png";
 import Message from "./Message";
-import ReactScrollToBottom from "react-scroll-to-bottom";
+// import ReactScrollToBottom from "react-scroll-to-bottom";
+import ReactScrollToBottom from "react-scroll-to-bottom"
 import closeIcon from "../images/closeIcon.png";
 
 let socket;
 
 const ENDPOINT = "http://localhost:4500/";
-
+let user="sammyak"
 const Chat = () => {
     const [id, setid] = useState("");
     const [messages, setMessages] = useState([])
@@ -41,7 +42,7 @@ const Chat = () => {
 
         socket.on('userJoined', (data) => {
             setMessages([...messages, data]);
-            console.log(data.user, data.message);
+            console.log(data.user, data.message,"the chat");
         })
 
         socket.on('leave', (data) => {
