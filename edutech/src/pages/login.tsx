@@ -9,9 +9,55 @@ import {
   Link,
   Stack,
   Image,
+  useToast,
 } from "@chakra-ui/react";
+import { useState } from "react";
+
+import {
+  loginLoading,
+  loginSuccess,
+  loginFailure,
+} from "../Redux/Authentication/actiontype";
+
+import { useSelector, useDispatch } from "react-redux";
+
+import axios from "axios";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const toast = useToast();
+  const dispatch = useDispatch();
+
+  const { loginloading } = useSelector((store: any) => store.Authentication);
+
+  console.log(loginloading);
+
+  const handleLogin = async () => {
+    if (email && password) {
+      const data = { email, password };
+      dispatch({ type: loginLoading });
+      try {
+        await axios
+          .post("http://localhost:4002/users/login", data)
+          .then((res) => {
+            dispatch({ type: loginSuccess, payload: res.data });
+            console.log(res.data);
+          });
+      } catch (err: any) {
+        dispatch({ type: loginFailure, payload: err.message });
+        console.log(err.message);
+      }
+    } else {
+      toast({
+        title: "Please fill all fields",
+        description: "Please fill all fields",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
   return (
     <Stack
       direction={{ base: "column", lg: "row", "2xl": "row" }}
@@ -35,11 +81,19 @@ export default function Login() {
           <Heading fontSize={"2xl"}>Sign in to your account</Heading>
           <FormControl id="email">
             <FormLabel>Email address</FormLabel>
-            <Input type="email" />
+            <Input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </FormControl>
           <FormControl id="password">
             <FormLabel>Password</FormLabel>
-            <Input type="password" />
+            <Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </FormControl>
           <Stack spacing={6}>
             <Stack
@@ -50,7 +104,14 @@ export default function Login() {
               <Checkbox>Remember me</Checkbox>
               <Link color={"blue.500"}>Forgot password?</Link>
             </Stack>
-            <Button colorScheme="teal" variant="solid" w="7rem">
+            <Button
+              colorScheme="teal"
+              variant="solid"
+              w="7rem"
+              onClick={handleLogin}
+              isLoading={loginloading}
+              loadingText="Loading..."
+            >
               Sign in
             </Button>
           </Stack>

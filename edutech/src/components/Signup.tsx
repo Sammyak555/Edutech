@@ -19,8 +19,22 @@ import {
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 
+import axios from "axios";
+
+import {
+  signupFailure,
+  signupLoading,
+  signupSuccess,
+} from "@/Redux/Authentication/actiontype";
+
+import { useSelector, useDispatch } from "react-redux";
+
 const Form1 = () => {
   const [show, setShow] = React.useState(false);
+  const dispatch = useDispatch();
+  const { name, email, password } = useSelector(
+    (store: any) => store.signupReducer
+  );
   const handleClick = () => setShow(!show);
   return (
     <VStack spacing="1.5" margin="auto" marginTop="10px">
@@ -28,14 +42,25 @@ const Form1 = () => {
         <FormLabel htmlFor="full-name" fontWeight={"normal"}>
           Full name
         </FormLabel>
-        <Input id="full-name" placeholder="Full name" />
+        <Input
+          id="full-name"
+          placeholder="Full name"
+          value={name}
+          onChange={(e) => dispatch({ type: "name", payload: e.target.value })}
+        />
       </FormControl>
 
       <FormControl>
         <FormLabel htmlFor="email" fontWeight={"normal"}>
           Email address
         </FormLabel>
-        <Input id="email" type="email" placeholder="Enter email" />
+        <Input
+          id="email"
+          type="email"
+          placeholder="Enter email"
+          value={email}
+          onChange={(e) => dispatch({ type: "email", payload: e.target.value })}
+        />
       </FormControl>
 
       <FormControl>
@@ -47,6 +72,10 @@ const Form1 = () => {
             pr="4.5rem"
             type={show ? "text" : "password"}
             placeholder="Enter password"
+            value={password}
+            onChange={(e) =>
+              dispatch({ type: "password", payload: e.target.value })
+            }
           />
           <InputRightElement width="4.5rem">
             <Button h="1.75rem" size="sm" onClick={handleClick}>
@@ -60,6 +89,11 @@ const Form1 = () => {
 };
 
 const Form2 = () => {
+  const dispatch = useDispatch();
+  const { cls, subject, state } = useSelector(
+    (store: any) => store.signupReducer
+  );
+
   return (
     <VStack spacing="1.5" margin="auto" marginTop="10px">
       <FormControl as={GridItem} colSpan={[6, 3]}>
@@ -84,10 +118,12 @@ const Form2 = () => {
           size="sm"
           w="full"
           rounded="md"
+          value={cls}
+          onChange={(e) => dispatch({ type: "class", payload: e.target.value })}
         >
-          <option>8</option>
-          <option>9</option>
-          <option>10</option>
+          <option value={"8"}>8</option>
+          <option value={"9"}>9</option>
+          <option value={"10"}>10</option>
         </Select>
       </FormControl>
 
@@ -113,10 +149,14 @@ const Form2 = () => {
           size="sm"
           w="full"
           rounded="md"
+          value={subject}
+          onChange={(e) =>
+            dispatch({ type: "subject", payload: e.target.value })
+          }
         >
-          <option>MATH</option>
-          <option>SCIENCE</option>
-          <option>ENGLISH</option>
+          <option value="MATH">MATH</option>
+          <option value="SCIENCE">SCIENCE</option>
+          <option value={"ENGLISH"}>ENGLISH</option>
         </Select>
       </FormControl>
 
@@ -143,6 +183,8 @@ const Form2 = () => {
           size="sm"
           w="full"
           rounded="md"
+          value={state}
+          onChange={(e) => dispatch({ type: "state", payload: e.target.value })}
         />
       </FormControl>
     </VStack>
@@ -150,11 +192,54 @@ const Form2 = () => {
 };
 
 export default function Signup() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const toast = useToast();
   const [step, setStep] = useState(1);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [progress, setProgress] = useState(50);
+
+  const dispatch = useDispatch();
+  const { name, email, password, cls, subject, state } = useSelector(
+    (store: any) => store.signupReducer
+  );
+  const { signloading } = useSelector((store: any) => store.Authentication);
+
+  const HandleClick = async () => {
+    if (name && email && password && cls && subject && state) {
+      const data = { name, email, password, cls, subject, state };
+      dispatch({ type: signupLoading });
+      try {
+        await axios
+          .post("http://localhost:4002/users/register", data)
+          .then((res) => {
+            dispatch({ type: signupSuccess, payload: res.data });
+            toast({
+              title: res.data,
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+              position: "top-right",
+            });
+          });
+      } catch (err: any) {
+        dispatch({ type: signupFailure, payload: err.message });
+        toast({
+          title: err.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top-right",
+        });
+      }
+    } else {
+      toast({
+        title: "Please fill all fields",
+        description: "Please fill all fields",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <Flex
       direction={{
@@ -264,17 +349,11 @@ export default function Signup() {
             {step === 2 ? (
               <Button
                 w="7rem"
-                colorScheme="red"
+                colorScheme="green"
                 variant="solid"
-                onClick={() => {
-                  toast({
-                    title: "Account created.",
-                    description: "We've created your account for you.",
-                    status: "success",
-                    duration: 3000,
-                    isClosable: true,
-                  });
-                }}
+                onClick={HandleClick}
+                isLoading={signloading}
+                loadingText="Loading..."
               >
                 Submit
               </Button>

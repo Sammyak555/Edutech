@@ -19,6 +19,7 @@
       "@/*": ["./src/*"]
     }
   },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/Redux/Authentication/SignupReducer.js"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/Chat.jsx", "src/components/Chat.jsx"],
   "exclude": ["node_modules"]
 }

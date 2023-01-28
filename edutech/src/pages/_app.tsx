@@ -9,11 +9,16 @@ import "../styles/Chat.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+import { Provider } from "react-redux";
+import store from "../Redux/store";
+
 function App({ Component, pageProps }: AppProps): React.ReactNode {
   return (
     <ChakraProvider>
       <Navbar />
-      <Component {...pageProps} />
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
       <Footer />
     </ChakraProvider>
   );
