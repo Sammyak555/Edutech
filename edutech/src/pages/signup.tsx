@@ -32,7 +32,6 @@ const Form1 = () => {
       <VStack spacing="1.5" margin="auto">
         <Image
           src="https://media.istockphoto.com/id/1337381696/photo/keep-learning-concept-letters-of-the-alphabet-on-a-chalk-board-drawn-arrows.jpg?b=1&s=170667a&w=0&k=20&c=h5Aayg3kppWeV6Su9ft1WVz-ARamcQl0CwAJ5Fl_zb8="
-          
           alt=""
           width="xs"
         />
@@ -48,7 +47,7 @@ const Form1 = () => {
         </Heading>
       </VStack>
 
-      <VStack spacing='1.5' margin='auto'>
+      <VStack spacing="1.5" margin="auto">
         <FormControl>
           <FormLabel htmlFor="first-name" fontWeight={"normal"}>
             First name
@@ -309,14 +308,20 @@ export default function multistep() {
   const [progress, setProgress] = useState(33.33);
   return (
     <>
-      <Box className="login_main"   border='1px solid red' width='75%' margin='auto'>
+      <Box
+        className="login_main"
+        border="1px solid red"
+        width="75%"
+        margin="auto"
+      >
         <Box className="heroimage_box">
-          <Image className="heroimage"
+          <Image
+            className="heroimage"
             src="https://img.freepik.com/free-vector/scientist-cartoon-character-with-science-lab-objects_1308-111810.jpg?w=2000"
             // src="https://media.istockphoto.com/id/643035492/vector/crazy-old-scientist-funny-character-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=8-2enSrm-4hMavJnhgf1qSuO6rUuJbXd5OmCI-WTZdM="
-            
+
             alt=""
-            width='100%'
+            width="100%"
           />
         </Box>
         <Box
