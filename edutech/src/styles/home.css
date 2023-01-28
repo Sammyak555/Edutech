@@ -44,14 +44,20 @@
     justify-content: space-evenly;
     margin-top: 20px;
     font-family: sans-serif;
+    margin-bottom: 60px;
 }
 .subpanel{
     /* border: 1px solid grey; */
     padding: 5px 12px 5px 12px;
     text-align: center;
     border-radius: 14px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
+.subpanel:hover{
+ 
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
 .titles>img{
     width: 60%;
 }
@@ -69,6 +75,7 @@
                   0% 100%,
                   0% 50%,
                    0% 20%);
+    padding-bottom: 120px;
 }
 .math-comp{
     /* border: 1px solid blue; */

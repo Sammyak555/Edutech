@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 const home = () => {
   return (
-    <div className='home-page'>home
+    <div className='home-page'>
         <div className='intro-div'>
             <h1>Welcome, sammyak! 👋🏼</h1>
             <p>Get access to quality study materials, brush up on concepts, solve sample papers and clarify all your doubts.</p>
