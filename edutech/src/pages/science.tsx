@@ -1,6 +1,8 @@
 import React from 'react'
 import Singlesubject from "../components/Singlesubject"
 
+import {Image} from '@chakra-ui/react'
+
 type obj={
     title: string,
     image: string,
@@ -14,7 +16,7 @@ export async function getServerSideProps() {
     return {
         props: {
             data:data
-        }, // will be passed to the page component as props
+        },
     }
 }
 
@@ -22,23 +24,25 @@ const science = (data:any) => {
     const arrdata=data.data
     console.log(arrdata)
 
-  return (<div className='maths-page'>
-  <div className='math-comp'>
-            <div className='subject-heading'>
-            <img src="https://cdn-icons-png.flaticon.com/128/2022/2022299.png" alt="" />
-            <h1>ＳＣＩＥＮＣＥ</h1>
-            </div>
-  <div className='math-topics'>
-  {
-      arrdata&&
-      arrdata.map((el:obj,i:number)=>{
-         return <Singlesubject {...el}/>
-      })
-  }
-  </div>
-  </div>
-  </div>
-)
+  return (
+    <div className="maths-page">
+      <div className="math-comp">
+        <div className="subject-heading">
+          <Image
+            src="https://cdn-icons-png.flaticon.com/128/2022/2022299.png"
+            alt=""
+          />
+          <h1>ＳＣＩＥＮＣＥ</h1>
+        </div>
+        <div className="math-topics">
+          {arrdata &&
+            arrdata.map((el: obj, i: number) => {
+              return <Singlesubject key={i} {...el} />;
+            })}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default science
