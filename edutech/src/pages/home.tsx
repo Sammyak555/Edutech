@@ -2,12 +2,15 @@ import React from "react";
 import Link from "next/link";
 
 import { Image } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 
 const home = () => {
+  const { loginSuccess } = useSelector((store: any) => store.Authentication);
+  const name = loginSuccess.name;
   return (
     <div className="home-page">
       <div className="intro-div">
-        <h1>Welcome, sammyak! 👋🏼</h1>
+        <h1>Welcome, {name}! 👋🏼</h1>
         <p>
           Get access to quality study materials, brush up on concepts, solve
           sample papers and clarify all your doubts.
