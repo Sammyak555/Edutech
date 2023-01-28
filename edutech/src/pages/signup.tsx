@@ -42,7 +42,7 @@ const Form1 = () => {
           Keep Learning
         </Heading>
 
-        <Heading fontSize="30px" fontWeight="100" lineHeight="20px">
+        <Heading fontSize="20px" fontWeight="100" lineHeight="20px">
           Student Registration Form
         </Heading>
       </VStack>
@@ -55,12 +55,12 @@ const Form1 = () => {
           <Input id="first-name" placeholder="First name" />
         </FormControl>
 
-        <FormControl>
+        {/* <FormControl>
           <FormLabel htmlFor="last-name" fontWeight={"normal"}>
             Last name
           </FormLabel>
           <Input id="last-name" placeholder="last name" />
-        </FormControl>
+        </FormControl> */}
 
         <FormControl>
           <FormLabel htmlFor="email" fontWeight={"normal"}>
@@ -94,7 +94,7 @@ const Form1 = () => {
 const Form2 = () => {
   return (
     <>
-      <Heading w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
+      <Heading  textAlign={"center"} fontWeight="normal">
         Student Details
       </Heading>
       <FormControl as={GridItem} colSpan={[6, 3]}>
@@ -107,11 +107,11 @@ const Form2 = () => {
             color: "gray.50",
           }}
         >
-          Country / Region
+         CLASS
         </FormLabel>
         <Select
-          id="country"
-          name="country"
+          id="class"
+          name="class"
           autoComplete="country"
           placeholder="Select option"
           focusBorderColor="brand.400"
@@ -120,63 +120,42 @@ const Form2 = () => {
           w="full"
           rounded="md"
         >
-          <option>United States</option>
-          <option>Canada</option>
-          <option>Mexico</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
         </Select>
       </FormControl>
 
-      <FormControl as={GridItem} colSpan={6}>
+
+      <FormControl as={GridItem} colSpan={[6, 3]}>
         <FormLabel
-          htmlFor="street_address"
+          htmlFor="subject"
           fontSize="sm"
           fontWeight="md"
           color="gray.700"
           _dark={{
             color: "gray.50",
           }}
-          mt="2%"
         >
-          Street address
+         SUBJECTS
         </FormLabel>
-        <Input
-          type="text"
-          name="street_address"
-          id="street_address"
-          autoComplete="street-address"
+        <Select
+          id="subject"
+          name="subject"
+          autoComplete="country"
+          placeholder="Select option"
           focusBorderColor="brand.400"
           shadow="sm"
           size="sm"
           w="full"
           rounded="md"
-        />
+        >
+          <option>MATH</option>
+          <option>SCIENCE</option>
+          <option>ENGLISH</option>
+        </Select>
       </FormControl>
 
-      <FormControl as={GridItem} colSpan={[6, 6, null, 2]}>
-        <FormLabel
-          htmlFor="city"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: "gray.50",
-          }}
-          mt="2%"
-        >
-          City
-        </FormLabel>
-        <Input
-          type="text"
-          name="city"
-          id="city"
-          autoComplete="city"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
 
       <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
         <FormLabel
@@ -204,31 +183,7 @@ const Form2 = () => {
         />
       </FormControl>
 
-      <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-        <FormLabel
-          htmlFor="postal_code"
-          fontSize="sm"
-          fontWeight="md"
-          color="gray.700"
-          _dark={{
-            color: "gray.50",
-          }}
-          mt="2%"
-        >
-          ZIP / Postal
-        </FormLabel>
-        <Input
-          type="text"
-          name="postal_code"
-          id="postal_code"
-          autoComplete="postal-code"
-          focusBorderColor="brand.400"
-          shadow="sm"
-          size="sm"
-          w="full"
-          rounded="md"
-        />
-      </FormControl>
+ 
     </>
   );
 };
@@ -334,7 +289,7 @@ export default function multistep() {
           as="form"
         >
           <Progress value={progress} mb="5%" mx="5%" isAnimated></Progress>
-          {step === 1 ? <Form1 /> : step === 2 ? <Form2 /> : <Form3 />}
+          {step === 1 ? <Form1 /> : <Form2 />}
           <ButtonGroup mt="5%" w="100%">
             <Flex w="100%" justifyContent="space-between">
               <Flex>
@@ -352,14 +307,15 @@ export default function multistep() {
                   Back
                 </Button>
                 <Button
+                  display={step===2?"none":"block"}
                   w="7rem"
-                  isDisabled={step === 3}
+                  isDisabled={step === 2}
                   onClick={() => {
                     setStep(step + 1);
-                    if (step === 3) {
+                    if (step === 2) {
                       setProgress(100);
                     } else {
-                      setProgress(progress + 33.33);
+                      setProgress(progress + 50.33);
                     }
                   }}
                   colorScheme="teal"
@@ -368,7 +324,7 @@ export default function multistep() {
                   Next
                 </Button>
               </Flex>
-              {step === 3 ? (
+              {step === 2 ? (
                 <Button
                   w="7rem"
                   colorScheme="red"
