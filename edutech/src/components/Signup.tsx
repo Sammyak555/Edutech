@@ -211,13 +211,21 @@ export default function Signup() {
           .post("http://localhost:4002/users/register", data)
           .then((res) => {
             dispatch({ type: signupSuccess, payload: res.data });
-            toast({
-              title: res.data,
-              status: "success",
-              duration: 5000,
-              isClosable: true,
-              position: "top-right",
-            });
+            if (res.data === "Already Registerd ! Please Login !") {
+              toast({
+                title: res.data,
+                status: "info",
+                duration: 5000,
+                isClosable: true,
+              });
+            } else {
+              toast({
+                title: res.data,
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+              });
+            }
           });
       } catch (err: any) {
         dispatch({ type: signupFailure, payload: err.message });

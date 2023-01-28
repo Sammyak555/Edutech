@@ -31,8 +31,6 @@ export default function Login() {
 
   const { loginloading } = useSelector((store: any) => store.Authentication);
 
-  console.log(loginloading);
-
   const handleLogin = async () => {
     if (email && password) {
       const data = { email, password };
@@ -42,14 +40,23 @@ export default function Login() {
           .post("http://localhost:4002/users/login", data)
           .then((res) => {
             dispatch({ type: loginSuccess, payload: res.data });
-            console.log(res.data);
-            toast({
-              title: res.data.msg,
-              status: "success",
-              duration: 5000,
-              isClosable: true,
-              position: "top-right",
-            });
+            if (res.data.msg === "Wrong Credentials !") {
+              toast({
+                title: res.data.msg,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "top-right",
+              });
+            } else {
+              toast({
+                title: res.data.msg,
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+                position: "top-right",
+              });
+            }
           });
       } catch (err: any) {
         dispatch({ type: loginFailure, payload: err.message });
