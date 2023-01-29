@@ -1,57 +1,63 @@
+const http = require("http");
 const express = require("express");
 const cors = require("cors");
+const socketIO = require("socket.io");
+
+const app = express();
+require("dotenv").config();
+const port = process.env.port;
+
 const { connection } = require("./Config/db");
 const { userRouter } = require("./Routes/user.routes");
-require("dotenv").config()
-const port =process.env.port
 const { bookRouter } = require("./Routes/book.router");
-// require('dotenv').config()
-const app = express();
+
 app.use(express.json());
 app.use(cors());
-// const nodeMailer = require('nodemailer')
 
-// const html =`
-//     <h1>Hi</h1>
-//     <p>node mailer</p>
-// `;
-// const emails=[
-//     'nikhilwalwatkar81@gmail.com','sammyak.deosale.1@gmail.com'
-// ]
-// async function main(){
-//    const transporter = nodeMailer.createTransport({
-//         host:'sammyakdeosaleverify@gmail.com',
-//         port:465,
-//         secure:true,
-//         auth:{
-//             user:'sammyakdeosaleverify@gmail.com',
-//             pass:'sammyak123'
-//         }
-//     })
-//    const info = await transporter.sendMail({
-//         from:'sammyak <sammyakdeosaleverify@gmail.com>',
-//         to:emails,
-//         subject:'testing mail verification',
-//         html:html
-//     })
+const users = [{}];
 
-//     console.log("msg sent:"+info.messageId);
-//     console.log(info.accepted)
-//     console.log(info.rejected)
+const server = http.createServer(app);
 
-// }
-// main()
-// .catch((e)=>console.log(e))
+const io = socketIO(server);
 
 app.use(express.json());
 app.use("/books", bookRouter);
 app.use("/users", userRouter);
 
 app.get("/", (req, res) => {
-    res.send("Hello World");
-})
+  res.send("Hello World");
+});
 
-app.listen(port, async (req, res) => {
+io.on("connection", (socket) => {
+  console.log("New Connection");
+
+  socket.on("joined", ({ user }) => {
+    users[socket.id] = user;
+    console.log(`${user} has joined `);
+    socket.broadcast.emit("userJoined", {
+      user: "Admin",
+      message: ` ${users[socket.id]} has joined`,
+    });
+    socket.emit("welcome", {
+      user: "Admin",
+      message: `Welcome to the chat,${users[socket.id]} `,
+    });
+  });
+
+  socket.on("message", ({ message, id }) => {
+    io.emit("sendMessage", { user: users[id], message, id });
+  });
+
+  socket.on("disconnect", () => {
+    socket.broadcast.emit("leave", {
+      user: "Admin",
+      message: `${users[socket.id]}  has left`,
+    });
+    console.log(`user left`);
+  });
+});
+
+server.listen(port, async (req, res) => {
   try {
     await connection;
     console.log("Connected to db");

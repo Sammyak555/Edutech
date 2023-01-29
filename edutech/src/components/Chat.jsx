@@ -13,7 +13,7 @@ import closeIcon from "../images/closeIcon.png";
 import { useSelector } from "react-redux";
 import { Box, Button, Modal,Icon, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 let socket;
-const ENDPOINT = "http://localhost:4500/";
+const ENDPOINT = "http://localhost:4002/";
 
 const Chat = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
