@@ -3,10 +3,10 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { AppProps } from "next/app";
 import "../styles/singup.css";
 import "../styles/home.css";
-import "../styles/Message.css"
+import "../styles/Message.css";
 import "../styles/Chat.css";
 
-import {BrowserRouter} from 'react-router-dom'
+import { BrowserRouter } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -16,11 +16,11 @@ import store from "../Redux/store";
 function App({ Component, pageProps }: AppProps): React.ReactNode {
   return (
     <ChakraProvider>
-      <Navbar />
       <Provider store={store}>
+        <Navbar />
         <Component {...pageProps} />
+        <Footer />
       </Provider>
-      <Footer />
     </ChakraProvider>
   );
 }

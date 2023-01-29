@@ -1,5 +1,11 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import * as EmailValidator from "email-validator";
+
+import { useRouter } from "next/router";
+
+import axios from "axios";
+
 import {
   Progress,
   Box,
@@ -18,8 +24,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
-
-import axios from "axios";
 
 import {
   signupFailure,
@@ -193,6 +197,7 @@ const Form2 = () => {
 
 export default function Signup() {
   const toast = useToast();
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(50);
 
@@ -205,32 +210,54 @@ export default function Signup() {
   const HandleClick = async () => {
     if (name && email && password && cls && subject && state) {
       const data = { name, email, password, cls, subject, state };
-      dispatch({ type: signupLoading });
-      try {
-        await axios
-          .post("http://localhost:4002/users/register", data)
-          .then((res) => {
-            dispatch({ type: signupSuccess, payload: res.data });
-            if (res.data === "Already Registerd ! Please Login !") {
-              toast({
-                title: res.data,
-                status: "info",
-                duration: 5000,
-                isClosable: true,
+      const verifiedEmail = EmailValidator.validate(email); // true
+      if (verifiedEmail === true) {
+        if (password.length >= 8) {
+          dispatch({ type: signupLoading });
+          try {
+            await axios
+              .post("http://localhost:4002/users/register", data)
+              .then((res) => {
+                dispatch({ type: signupSuccess, payload: res.data });
+                if (res.data === "Already Registerd ! Please Login !") {
+                  toast({
+                    title: res.data,
+                    status: "info",
+                    duration: 5000,
+                    isClosable: true,
+                  });
+                } else {
+                  toast({
+                    title: res.data,
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                  });
+                  router.push("/login");
+                }
               });
-            } else {
-              toast({
-                title: res.data,
-                status: "success",
-                duration: 5000,
-                isClosable: true,
-              });
-            }
+          } catch (err: any) {
+            dispatch({ type: signupFailure, payload: err.message });
+            toast({
+              title: err.message,
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+              position: "top-right",
+            });
+          }
+        } else {
+          toast({
+            title: "Password must be at least 8 characters",
+            status: "warning",
+            duration: 5000,
+            isClosable: true,
+            position: "top-right",
           });
-      } catch (err: any) {
-        dispatch({ type: signupFailure, payload: err.message });
+        }
+      } else {
         toast({
-          title: err.message,
+          title: "Invalid Email",
           status: "error",
           duration: 5000,
           isClosable: true,
@@ -247,7 +274,6 @@ export default function Signup() {
       });
     }
   };
-
   return (
     <Flex
       direction={{
