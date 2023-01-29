@@ -50,7 +50,7 @@ const Singlesubject = (el: obj) => {
                   alt=""
                 />
               </div>
-              <Link href={el.drivelink}>
+              <Link href={el.drivelink} target={"_blank"}>
                 <h2 style={{ color: "blue" }}>Open Pdf</h2>
               </Link>
               <p>{el.description}</p>
