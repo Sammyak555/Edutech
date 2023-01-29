@@ -216,7 +216,10 @@ export default function Signup() {
           dispatch({ type: signupLoading });
           try {
             await axios
-              .post("http://localhost:4002/users/register", data)
+              .post(
+                "https://learn-grow-backend.vercel.app/users/register",
+                data
+              )
               .then((res) => {
                 dispatch({ type: signupSuccess, payload: res.data });
                 if (res.data === "Already Registerd ! Please Login !") {

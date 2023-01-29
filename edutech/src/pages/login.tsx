@@ -40,7 +40,7 @@ export default function Login() {
       dispatch({ type: loginLoading });
       try {
         await axios
-          .post("http://localhost:4002/users/login", data)
+          .post("https://learn-grow-backend.vercel.app/users/login", data)
           .then((res) => {
             dispatch({ type: loginSuccess, payload: res.data });
             if (res.data.msg === "Wrong Credentials !") {

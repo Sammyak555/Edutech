@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 // import { user } from "./Join";
 import socketIo from "socket.io-client";
 import { BiSend } from 'react-icons/bi'
-// const simpleDatetimeFormater = require("simple-datetime-formater")
+
 
 import sendLogo from "../images/send.png";
 import Message from "./Message";
-// import ReactScrollToBottom from "react-scroll-to-bottom";
+
 import ReactScrollToBottom from "react-scroll-to-bottom";
 import closeIcon from "../images/closeIcon.png";
 

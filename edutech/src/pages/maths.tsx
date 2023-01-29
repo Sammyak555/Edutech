@@ -12,7 +12,9 @@ type obj = {
   description: string;
 };
 export async function getServerSideProps() {
-  let res = await fetch("http://localhost:4002/books?subject=MATH");
+  let res = await fetch(
+    "https://learn-grow-backend.vercel.app/books?subject=MATH"
+  );
   let data = await res.json();
   return {
     props: {
