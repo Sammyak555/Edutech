@@ -23,3 +23,11 @@ Edutech Project -Hakathon
 ![i6](https://user-images.githubusercontent.com/101917670/215333847-bb907df1-fb09-4655-b8bb-ccabfc40aa66.PNG)
 
 
+
+# backend :
+-npm install
+-npm run server
+
+# frontend
+-npm install
+-npm run dev
