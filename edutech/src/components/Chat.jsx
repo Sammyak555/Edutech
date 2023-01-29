@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // import { user } from "./Join";
 import socketIo from "socket.io-client";
-//
+import { BiSend } from 'react-icons/bi'
+// const simpleDatetimeFormater = require("simple-datetime-formater")
+
 import sendLogo from "../images/send.png";
 import Message from "./Message";
 // import ReactScrollToBottom from "react-scroll-to-bottom";
@@ -9,14 +11,17 @@ import ReactScrollToBottom from "react-scroll-to-bottom";
 import closeIcon from "../images/closeIcon.png";
 
 import { useSelector } from "react-redux";
+import { Box, Button, Modal,Icon, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 let socket;
 const ENDPOINT = "http://localhost:4500/";
 
 const Chat = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const finalRef = useRef(null)
   const { loginSuccess } = useSelector((store) => store.Authentication);
   const name = loginSuccess.name;
   let user = name || "User";
-  const [id, setid] = useState("");
+  const [id, setid] = useState(""); 
   const [messages, setMessages] = useState([]);
 
   const send = () => {
@@ -62,21 +67,29 @@ const Chat = () => {
       setMessages([...messages, data]);
       console.log(data.user, data.message, data.id);
     });
+
     return () => {
       socket.off();
     };
   }, [messages]);
 
   return (
-    <div className="chatPage">
+    <>
+    <Box ref={finalRef} tabIndex={-1} aria-label='Focus moved to this box'>
+       
+      </Box>
+
+      <Button mt={4} onClick={onOpen}>
+       You have any Doubt?
+      </Button>
+      <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Chat</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+          <div className="chatPage">
       <div className="chatContainer">
-        <div className="header">
-          <h2>C CHAT</h2>
-          <a href="/">
-            {" "}
-            <img src={closeIcon} alt="Close" />
-          </a>
-        </div>
         <ReactScrollToBottom className="chatBox">
           {messages.map((item, i) => (
             <Message
@@ -93,11 +106,15 @@ const Chat = () => {
             id="chatInput"
           />
           <button onClick={send} className="sendBtn">
-            <img src={sendLogo} alt="Send" />
+          Send<Icon as={BiSend} marginBottom={'-3px'} marginLeft={'4px'}/>
           </button>
         </div>
       </div>
     </div>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 
