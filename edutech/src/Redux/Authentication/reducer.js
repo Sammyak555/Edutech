@@ -74,6 +74,12 @@ export const Authentication = (state = initialState, { type, payload }) => {
         isAuthenticated: false,
       };
     }
+    case "logout": {
+      return {
+        ...state,
+        isAuthenticated: false,
+      };
+    }
     default: {
       return state;
     }

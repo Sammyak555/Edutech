@@ -8,9 +8,17 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
+import { useEffect, useState } from "react";
+
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useSelector, useDispatch } from "react-redux";
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const { isOpen, onToggle } = useDisclosure();
+
+  const { isAuthenticated } = useSelector((store: any) => store.Authentication);
 
   return (
     <Box
@@ -48,28 +56,44 @@ export default function Navbar() {
           </Box>
         </Flex>
 
-        <Flex flex={1} justify={"flex-end"} alignItems="center" gap="5">
-          <Link href={"/login"}>
-            <Button
-              fontSize={"sm"}
-              fontWeight={400}
-              variant={"link"}
-            >
-              Sign In
-            </Button>
-          </Link>
+        <Flex flex={1} justify={"flex-end"}>
+          {isAuthenticated === false ? (
+            <Flex gap="5" alignItems="center">
+              <Link href={"/login"}>
+                <Button fontSize={"sm"} fontWeight={400} variant={"link"}>
+                  Sign In
+                </Button>
+              </Link>
 
-          <Link href={"/"}>
-            <Button
-              fontSize={"sm"}
-              fontWeight={600}
-              colorScheme="teal"
-              variant="solid"
-              w="7rem"
-            >
-              Sign Up
-            </Button>
-          </Link>
+              <Link href={"/"}>
+                <Button
+                  fontSize={"sm"}
+                  fontWeight={600}
+                  colorScheme="teal"
+                  variant="solid"
+                  w="7rem"
+                >
+                  Sign Up
+                </Button>
+              </Link>
+            </Flex>
+          ) : (
+            <Box>
+              <Button
+                fontSize={"sm"}
+                fontWeight={600}
+                colorScheme="teal"
+                variant="solid"
+                w="7rem"
+                onClick={() => {
+                  dispatch({ type: "logout" });
+                  router.push("/");
+                }}
+              >
+                Signout
+              </Button>
+            </Box>
+          )}
         </Flex>
       </Flex>
     </Box>
