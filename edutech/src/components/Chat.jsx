@@ -10,7 +10,6 @@ import closeIcon from "../images/closeIcon.png";
 
 import { useSelector } from "react-redux";
 let socket;
-
 const ENDPOINT = "http://localhost:4500/";
 
 const Chat = () => {
@@ -31,7 +30,6 @@ const Chat = () => {
     socket = socketIo(ENDPOINT, { transports: ["websocket"] });
 
     socket.on("connect", () => {
-      alert("Connected");
       setid(socket.id);
     });
     console.log(socket);

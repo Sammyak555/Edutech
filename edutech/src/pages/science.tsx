@@ -1,28 +1,29 @@
-import React from 'react'
-import Singlesubject from "../components/Singlesubject"
+import React from "react";
+import Singlesubject from "../components/Singlesubject";
 
-import {Image} from '@chakra-ui/react'
+import { Image } from "@chakra-ui/react";
+import Chat from "@/components/Chat";
 
-type obj={
-    title: string,
-    image: string,
-    drivelink: string,
-    subject: string,
-    description: string
-}
+type obj = {
+  title: string;
+  image: string;
+  drivelink: string;
+  subject: string;
+  description: string;
+};
 export async function getServerSideProps() {
-    let res = await fetch('http://localhost:4002/books?subject=Science')
-    let data = await res.json()
-    return {
-        props: {
-            data:data
-        },
-    }
+  let res = await fetch("http://localhost:4002/books?subject=Science");
+  let data = await res.json();
+  return {
+    props: {
+      data: data,
+    },
+  };
 }
 
-const science = (data:any) => {
-    const arrdata=data.data
-    console.log(arrdata)
+const science = (data: any) => {
+  const arrdata = data.data;
+  console.log(arrdata);
 
   return (
     <div className="maths-page">
@@ -40,9 +41,12 @@ const science = (data:any) => {
               return <Singlesubject key={i} {...el} />;
             })}
         </div>
+        <div>
+          <Chat />
+        </div>
       </div>
     </div>
   );
-}
+};
 
-export default science
+export default science;
