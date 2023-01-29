@@ -5,6 +5,7 @@ import { Image } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 const home = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { loginSuccess } = useSelector((store: any) => store.Authentication);
   const name = loginSuccess.name;
   return (

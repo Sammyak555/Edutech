@@ -60,7 +60,7 @@ const Chat = () => {
       socket.emit("disconnected");
       socket.off();
     };
-  }, []);
+  }, [messages,user]);
 
   useEffect(() => {
     socket.on("sendMessage", (data) => {
@@ -71,7 +71,7 @@ const Chat = () => {
     return () => {
       socket.off();
     };
-  }, [messages]);
+  }, [messages,user]);
 
   return (
     <>
@@ -93,6 +93,7 @@ const Chat = () => {
         <ReactScrollToBottom className="chatBox">
           {messages.map((item, i) => (
             <Message
+              key={i}
               user={item.id === id ? "" : item.user}
               message={item.message}
               classs={item.id === id ? "right" : "left"}
